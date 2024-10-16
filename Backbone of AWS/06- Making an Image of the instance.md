@@ -126,3 +126,42 @@ Based on the ssh command we copied:
 - The username become root, this is because when creating an image from an instance, the default user is not copied over on the console of the SSH Client Connect. This is why we need to change the username to `ec2-user`.
 
 ![](img/AMI/AMI-17.png)
+
+
+**Lets do some minor edits on our Apache webpage.**  
+
+NOTE: This will be useful in the following sections.
+\
+- Go to the instance and edit the `index.html` file.
+
+```
+sudo -i
+```
+
+![](img/AMI/AMI-18.png)  
+
+```
+vim var/www/html/index.html
+```
+
+![](img/AMI/AMI-19.png)
+
+
+- Let's add new details to the webpage.
+
+![](img/AMI/AMI-20.png):
+
+![](img/AMI/AMI-20-1.png)
+
+save and exit file
+
+```
+:wq
+```
+
+- Verify the changes by refreshing the webpage.
+
+![](img/AMI/AMI-21.png)
+
+#### Cleanup:
+- Remember to remove remove the image and the instances to avoid unnecessary charges.

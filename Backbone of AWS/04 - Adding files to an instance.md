@@ -142,4 +142,7 @@ http://<your-public-ipv4-address>
 
 If everything is set up correctly, you should now see the images from your S3 bucket displayed on your website.
 
+#### Cleanup
+- Remember to delete the IAM role and S3 bucket if you no longer need them to avoid unnecessary charges.
+
 

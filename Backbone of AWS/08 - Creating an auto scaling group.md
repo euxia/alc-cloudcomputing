@@ -19,14 +19,37 @@ A **Launch Template** or **Launch Configuration** defines the configuration for 
 
 2. **Create a Launch Template**:
    - On the left sidebar, under **Instances**, click **Launch Templates**.
+
+![](img/ASG/ASG-01.png)
+
    - Click **Create launch template**.
+
+![](img/ASG/ASG-02.png)
+
    - Provide a **Name** and **Description** for the template.
-   - Under **Source AMI**, select the Amazon Machine Image (AMI) you wish to use for your instances.
+
+![](img/ASG/ASG-03.png)
+
+   - Under **Source AMI**, select the AMI we made earlier.
+
+![](img/ASG/ASG-04.png)
+
    - Choose an **Instance type** (e.g., t2.micro for free tier).
+
+![](img/ASG/ASG-05.png)
+
    - Assign a **Key Pair** for SSH access to your instances.
-   - In the **Network settings**, select your **VPC** and choose the appropriate **subnets** for your instances.
-   - Under **Security Groups**, either select an existing security group or create a new one to define inbound/outbound traffic rules.
-   - Configure **storage** by selecting the root volume size and type (e.g., 8 GiB General Purpose SSD).
+
+![](img/ASG/ASG-06.png)
+
+
+   - In the **Network settings**, select your **VPC** and choose the subnet where your instances are located.
+   - Under **Security Groups**, select the security group we chose earlier.
+
+![](img/ASG/ASG-07.png)
+
+   - Leave storage as it is as it is already defined in the AMI.
+
    - Click **Create launch template**.
 
 ### Using AWS CLI:
@@ -60,28 +83,47 @@ An Auto Scaling Group ensures that you always have the right number of EC2 insta
 
 1. Navigate to Auto Scaling Groups:
    - In the EC2 Dashboard, under Auto Scaling, click Auto Scaling Groups.
-Click Create Auto Scaling group.  
-2. Configure Basic Settings:
+
+![](img/ASG/ASG-08.png)
+
+Click Create Auto Scaling group. 
+
+
+1. Configure Basic Settings:
    - Name your Auto Scaling group. Select the Launch Template or Launch Configuration created earlier.
+
+![](img/ASG/ASG-09.png)
+
 3. Choose a VPC and Subnets:
-   - Select a VPC and at least two subnets (for high 
-availability).
-4. Configure Instance Scaling
+   - Select a VPC and subnets where your instances will be launched. Se
+
+![](img/ASG/ASG-10.png)
+
+4. Attach Load Balancers:
+   - Attach our the target group on the load balancer we made to the Auto Scaling group.
+
+![](img/ASG/ASG-11.png)
+
+5. For health check, select EC2 or ELB health check.
+
+![](img/ASG/ASG-12.png)
+
+6. Configure Instance Scaling
    - Set the Minimum, Desired, and Maximum number of instances.
     Example:
-     - Minimum: 1
-     - Desired: 2
-     - Maximum: 4
-  
-5. Configure Scaling Policies (Optional):
-    - Set up policies to automatically scale based on CPU usage or other metrics.
-    - Select Target tracking scaling policy and define a target, e.g., maintaining CPU utilization at 50%.
+     - Minimum: 2 - If one instance fails, the other will still handle traffic.
+     - Desired: 3 - All target instances are running under normal circumstances.
+     - Maximum: 5 - During traffic spikes or high demand periods
 
-6. Configure Notifications (Optional):
-    - Add notifications to receive alerts for scaling activities.
+![](img/ASG/ASG-13.png)
 
-7. Review and Create:
+
+just click next until you reach the end.
+
+6.  Review and Create:
    - Review the configuration and click Create Auto Scaling group.
+
+![](img/ASG/ASG-14.png)
 
 ### Using AWS CLI:
 
@@ -97,44 +139,10 @@ aws autoscaling create-auto-scaling-group \
     --vpc-zone-identifier "subnet-0123456789abcdef0,subnet-0abcdef1234567890"
 ```
 
-## Step 3: Configure Health Checks  
-
-1. Navigate to the Auto Scaling Group in the AWS Console.
-2. Select the Auto Scaling group you just created.
-3. Under Instances, click Edit.
-4. Choose EC2 health check or ELB health check (if using an Elastic Load Balancer).
-5. Save your changes.
-
-### Using AWS CLI:
-
-```
-aws autoscaling update-auto-scaling-group \
-    --auto-scaling-group-name my-auto-scaling-group \
-    --health-check-type ELB \
-    --health-check-grace-period 300
-```
-
-## Step 4: Verify Auto Scaling Behavior
-1. Go to Auto Scaling Groups in the AWS Console.
-2. View the status of your instances and check whether they scale based on load.
-3. Adjust your load (e.g., using a stress test) to see the scaling in action.
-   
-### Monitoring (Optional):
-
-Use CloudWatch to monitor CPU utilization and trigger scaling events.
-
-```
-aws cloudwatch put-metric-alarm \
-    --alarm-name "ScaleUpOnHighCPU" \
-    --metric-name CPUUtilization \
-    --namespace AWS/EC2 \
-    --statistic Average \
-    --period 60 \
-    --threshold 70 \
-    --comparison-operator GreaterThanOrEqualToThreshold \
-    --dimensions "Name=AutoScalingGroupName,Value=my-auto-scaling-group" \
-    --evaluation-periods 2 \
-    --alarm-actions "arn:aws:autoscaling:region:account-id:scalingPolicy:policy-id:autoScalingGroupName/my-auto-scaling-group:policyName/ScaleOutPolicy"
-```
+**Note**
+- To verify auto scaling behaviour, refer to this documentation
+https://docs.aws.amazon.com/sagemaker/latest/dg/endpoint-scaling-loadtest.html
 
 
+#### Cleanup
+- Remember to delete the Auto Scaling Group and Launch Template when you're done to avoid incurring unnecessary costs.

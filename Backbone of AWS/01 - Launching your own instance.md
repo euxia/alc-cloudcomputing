@@ -120,6 +120,10 @@ Click on the instance ID to view the details.
 
 You have successfully launched your first instance. Welcome to the world of cloud computing and painful billings!
 
+
+#### Cleaning Up:
+- **Terminating the instance:** To avoid unnecessary charges, remember to terminate the instance when you're done using it. You can do this by selecting the instance and clicking **Actions** > **Instance State** > **Terminate**.
+
 #### Optional: Setting up RDP AMI Instance
 
 - **RDP:** Remote Desktop Protocol - This will provide us a graphical interface that lets you interact with the remote desktop, just like you would on your local machine. This will be useful if you want to use Windows-based server. Lets test this later.
