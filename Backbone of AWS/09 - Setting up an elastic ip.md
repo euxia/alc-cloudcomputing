@@ -1,4 +1,4 @@
-# Workshop Guide: Setting Up an Elastic IP on AWS EC2
+# Setting Up an Elastic IP on AWS EC2
 
 ## Prerequisites
 - An existing EC2 instance to associate the Elastic IP with
@@ -38,7 +38,7 @@
 2. Select your EC2 instance and scroll down to the **Description** tab.
 3. Verify that the **Elastic IP** is now listed under the instance's public IP address.
   
-![](img/EIA/EIA-07.png)
+![](img/EIA/EIA-06-01.png)
 
 
 ### Step 4: Test the Elastic IP
@@ -46,19 +46,22 @@
 2. Enter the Elastic IP address in the address bar.
 3. If a web server is running on your instance, you should see the expected response.
 
-![](img/EIA/EIA-08.png)
+![](img/EIA/EIA-07.png)
 
 ## Cleanup
 1. If you no longer need the Elastic IP, go back to the **Elastic IPs** section.
 2. Select the Elastic IP and choose **Disassociate Elastic IP address** from the **Actions** dropdown.
 
-![](img/EIA/EIA-09.png)
+![](img/EIA/EIA-08.png)
 
 3. Release the Elastic IP by selecting **Release Elastic IP address** from the **Actions** dropdown.
 
-![](img/EIA/EIA-10.png)
+![](img/EIA/EIA-09.png)
 
 4. Confirm the release.
+
+
+![](img/EIA/EIA-10.png)
 
 ## Additional Resources
 - [Elastic IP Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
